@@ -3,9 +3,12 @@ import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {FaUserCircle} from "react-icons/fa";
 import {IoReturnUpBackOutline} from "react-icons/io5";
 import {AiOutlineEdit} from "react-icons/ai";
+import {useActionContacts, useContacts} from "../Components/ContactProvider";
+import {toast} from "react-toastify";
 
-export default function ContactDetailPage(props) {
-    const {onRemove} = props
+export default function ContactDetailPage() {
+    const {contacts} = useContacts()
+    const dispatch = useActionContacts()
     const {id} = useParams()
     const [contactDetail, setContactDetail] = useState(null)
     const navigate = useNavigate()
@@ -23,7 +26,16 @@ export default function ContactDetailPage(props) {
         }
     }, [])
 
+    const handleRemoveContact = () => {
+        dispatch({type: 'removeContact', payload: contactDetail});
+        toast.success(`${contactDetail.name} has been removed`)
 
+        if (contacts.length > 1) {
+            navigate('/')
+        } else {
+            navigate('/add-contact')
+        }
+    }
     return (
         contactDetail ?
             <div className='w-full p-5 h-screen flex justify-center '>
@@ -45,7 +57,7 @@ export default function ContactDetailPage(props) {
                         <label className='font-medium'>Email :</label>
                         <p className='text-gray-500 ml-2'>{contactDetail.email}</p>
                     </div>
-                    <button onClick={() => onRemove(contactDetail)}
+                    <button onClick={handleRemoveContact}
                             className='bg-red-600 py-1.5 text-white text-sm border-none outline-none shadow-md shadow-red-600/50'>
                         REMOVE
                     </button>

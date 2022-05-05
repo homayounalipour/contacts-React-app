@@ -5,12 +5,15 @@ import App from './App';
 import {BrowserRouter} from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
 import {ToastContainer} from 'react-toastify';
+import ContactProvider from "./Components/ContactProvider";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <BrowserRouter>
-        <App/>
+        <ContactProvider>
+            <App/>
+        </ContactProvider>
         <ToastContainer/>
     </BrowserRouter>
 );

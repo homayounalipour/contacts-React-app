@@ -2,18 +2,19 @@ import React, {useEffect, useState} from "react";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import Input from "./Input";
 import Header from "./Header";
+import {useActionContacts} from "./ContactProvider";
+import {toast} from "react-toastify";
 
-export default function EditFormContact(props) {
+export default function EditFormContact() {
     const [formValue, setFormValue] = useState({name: '', mobile: '', email: ''})
-    const {onEdit} = props
     const {id} = useParams()
+    const dispatch = useActionContacts()
     const navigate = useNavigate()
     const {state} = useLocation()
 
     useEffect(() => {
         if (state) {
             setFormValue(state.contactDetail)
-            console.log(state.contactDetail, 'state is here')
         } else {
             const savedContacts = JSON.parse(localStorage.getItem('contactsApp'))
             const selectedContacts = savedContacts.find((contact) => contact.id === Number(id))
@@ -31,7 +32,9 @@ export default function EditFormContact(props) {
     }
     const handleSubmitEdit = (e) => {
         e.preventDefault()
-        onEdit(formValue)
+        dispatch({type: 'editContact', payload: formValue})
+        navigate('/')
+        toast.success(`${formValue.name} has been changed`)
     }
     return (
         <div className='flex flex-col h-screen'>
