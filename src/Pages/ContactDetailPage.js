@@ -29,7 +29,6 @@ export default function ContactDetailPage() {
     const handleRemoveContact = () => {
         dispatch({type: 'removeContact', payload: contactDetail});
         toast.success(`${contactDetail.name} has been removed`)
-
         if (contacts.length > 1) {
             navigate('/')
         } else {
