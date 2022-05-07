@@ -4,18 +4,19 @@ import {Link, useNavigate} from "react-router-dom";
 import {BsPlus} from "react-icons/bs";
 
 export default function ContactsList(props) {
-    const {contacts} = props
+    const {contacts, search} = props
     const navigate = useNavigate()
 
     return (
         <section className='p-5 mx-auto max-w-[1200px]'>
 
             {
-                contacts.length > 0 ?
+                !search || contacts.length > 0 ?
                     contacts.map((contact) => (
                         <ContactItem key={contact.id} contact={contact}/>
                     )) : <div className='flex flex-col justify-center items-center '>
-                        <h1 className='flex justify-center text-xl lg:text-3xl font-bold mb-5'>you dont have any contact</h1>
+                        <h1 className='flex justify-center text-xl lg:text-3xl font-bold mb-5'>you dont have any
+                            contact</h1>
                         <Link to='/add-contact' className='underline'>
                             add contact
                         </Link>
