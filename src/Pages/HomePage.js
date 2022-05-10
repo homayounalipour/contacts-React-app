@@ -1,11 +1,10 @@
-import React, {useEffect} from "react";
+import React from "react";
 import ContactsList from "../Components/ContactsList";
 import Header from "../Components/Header";
 import {IoIosSearch} from "react-icons/io";
 
 export default function HomePage(props) {
     const {contacts, onSearch, search} = props
-
     return (
         <main>
             <Header title='Contacts'>
@@ -16,7 +15,7 @@ export default function HomePage(props) {
                     <IoIosSearch className='absolute right-2 top-[0.6rem]'/>
                 </div>
             </Header>
-            <ContactsList contacts={contacts}/>
+            <ContactsList contacts={contacts} search={search}/>
         </main>
     )
 }

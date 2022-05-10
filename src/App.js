@@ -68,8 +68,12 @@ function App() {
     const handleRemoveContact = (contact) => {
         const updatedContact = contacts.filter((contactItem) => contactItem.id !== contact.id)
         setAllContacts(updatedContact)
-        navigate('/')
         toast.success(`${contact.name} has been removed`)
+        if (contacts.length > 1) {
+            navigate('/')
+        } else {
+            navigate('/add-contact')
+        }
     }
 
     const handleAddContact = (contact) => {
@@ -85,11 +89,10 @@ function App() {
         <Routes>
             <Route path='/'
                    element={<HomePage contacts={contacts} onRemove={handleRemoveContact}
-                                      onSearch={handleSearchContacts}/>} search={search}/>
+                                      onSearch={handleSearchContacts} search={search}/>}/>
             <Route path='/add-contact' element={<AddPage onSubmit={handleAddContact}/>}/>
             <Route path='/contact-:id' element={<ContactDetailPage onRemove={handleRemoveContact}/>}/>
             <Route path='/edit-:id' element={<EditPage onEdit={handleEditContact}/>}/>
-
         </Routes>
     );
 }
